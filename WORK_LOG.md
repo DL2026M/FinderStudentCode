@@ -1,9 +1,9 @@
-Name: YOUR NAME HERE
+Name: David Lutch 
 
-| Date    |  Time  |                                     Update |
-|:--------|:------:|-------------------------------------------:|
-| April 5 | 9-10pm | I tried to write abstract, efficient code. |
-|         |        |                                            |
+| Date         |      Time       |                                                                                                                                                                                                                                                                                                                                                                        Update |
+|:-------------|:---------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| October 30th | 2:00pm - 3:00pm | I began brainstorming on how to solve this solve problem by creating my own way. In addition, Mr. Blick explained the beginning of the problem and that I needed to built a table that has the ability to lookup data in constant time. This requires not only the searching algorithm to be fast, but also for the table to be built in a way that increases overall speed.  |
+|              |                 |                                                                                                                                                                                                                                                                                                                                                                               |
 
 
 To add a new row to the table, click into a cell and then hit shift-enter.

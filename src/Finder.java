@@ -6,7 +6,7 @@ import java.io.IOException;
  * for Adventures in Algorithms
  * At Menlo School in Atherton, CA
  *
- * Completed by: [YOUR NAME HERE]
+ * Completed by: David Lutch
  **/
 
 public class Finder {
@@ -17,9 +17,17 @@ public class Finder {
 
     public void buildTable(BufferedReader br, int keyCol, int valCol) throws IOException {
         // TODO: Complete the buildTable() function!
-        br.close();
-    }
 
+        String line = br.readLine();
+        while (line != null) {
+            line = br.readLine();
+
+        }
+        br.close();
+
+
+    }
+    // Run constant time regardless of the size of the data table
     public String query(String key){
         // TODO: Complete the query() function!
         return INVALID;
