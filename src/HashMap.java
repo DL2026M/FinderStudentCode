@@ -21,34 +21,48 @@ public class HashMap {
         }
         return seqHash;
     }
+
     public void add(String key, String value) {
         // Checks to see if the table is already 50% full
-        if ((double) elementsSize / tableSize >= 0.5) {
-            resize();
-        }
-        while (elementsSize < tableSize - 1) {
+            if ((double) elementsSize / tableSize >= 0.5) {
+                resize();
+            }
+            // How do I wrap around here if at end
             if (key.equals(keys[elementsSize])) {
                 elementsSize++;
-                if (values[elementsSize] == null) {
-                    values[elementsSize] = value;
-                    keys[elementsSize] = key;
-                }
             }
-            keys[elementsSize] = key;
-            values[elementsSize] = value;
-            elementsSize++;
-        }
+            else if (values[elementsSize] == null) {
+                values[elementsSize] = value;
+                keys[elementsSize] = key;
+                elementsSize++;
+            }
     }
+
     public String get(String key) {
-        return key;
+        return null;
     }
+
     public void resize() {
+        int oldSize = tableSize;
         tableSize = tableSize * 2;
         String[] newTable = new String[tableSize];
         String[] newValues = new String[tableSize];
-        for (int i = 0; i < tableSize; i++) {
-            newTable[i] = keys[i];
-            newValues[i] = values[i];
+        int newHash;
+        for (int i = 0; i < oldSize; i++) {
+
+            if (keys[i] == null) continue;
+
+            // I know for sure that keys[i] is NOT null
+            newHash = hash(keys[i]);
+
+            while (newValues[i] != null) {
+                i++;
+                if (i >= tableSize) {
+                    i = 0;
+                }
+            }
+            newTable[newHash] = keys[i];
+            newValues[newHash] = values[i];
         }
         keys = newTable;
         values = newValues;

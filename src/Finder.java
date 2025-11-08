@@ -13,16 +13,18 @@ public class Finder {
 
     private static final String INVALID = "INVALID KEY";
 
-    public Finder() {}
+    public Finder() {
+        HMap = new HashMap();
+    }
+
+    HashMap HMap;
 
     public void buildTable(BufferedReader br, int keyCol, int valCol) throws IOException {
-        // TODO: Complete the buildTable() function!
         String line = br.readLine();
         while (line != null) {
             line = br.readLine();
-            // call the HashMap thing
-            HashMap.add(keyCol, valCol);
-
+            String[] data = line.split(",");
+            HMap.add(data[keyCol], data[valCol]);
         }
         br.close();
 
@@ -30,8 +32,9 @@ public class Finder {
     }
     // Run constant time regardless of the size of the data table
     public String query(String key){
-        // TODO: Complete the query() function!
+        String value = HMap.get(key);
+        if (value == null) return INVALID;
+        return value;
 
-        return INVALID;
     }
 }
