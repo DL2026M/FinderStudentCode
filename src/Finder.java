@@ -22,15 +22,15 @@ public class Finder {
     public void buildTable(BufferedReader br, int keyCol, int valCol) throws IOException {
         String line = br.readLine();
         while (line != null) {
-            line = br.readLine();
             String[] data = line.split(",");
             HMap.add(data[keyCol], data[valCol]);
+            line = br.readLine();
         }
         br.close();
 
 
     }
-    // Run constant time regardless of the size of the data table
+    // Runs in constant time regardless of the size of the data table
     public String query(String key){
         String value = HMap.get(key);
         if (value == null) return INVALID;

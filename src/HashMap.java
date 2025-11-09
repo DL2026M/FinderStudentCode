@@ -1,11 +1,12 @@
 public class HashMap {
     // A low prime number - we don't want it too big to waste space and not too small to have to resize extra times
-    private int DEFAULT_TABLE_SIZE = 1009;
+    private static int DEFAULT_TABLE_SIZE = 1609;
+    private static final int RADIX = 256;
+    private static final double LOAD_FACTOR = 0.50;
     private int tableSize;
     private int elementsSize;
     private String[] keys;
     private String[] values;
-    private static final int RADIX = 256;
 
     public HashMap() {
         tableSize = DEFAULT_TABLE_SIZE;
@@ -23,48 +24,55 @@ public class HashMap {
     }
 
     public void add(String key, String value) {
+        elementsSize++;
         // Checks to see if the table is already 50% full
-            if ((double) elementsSize / tableSize >= 0.5) {
-                resize();
+        if ((double) elementsSize / tableSize >= LOAD_FACTOR) {
+            resize();
+        }
+        int newHashValue = hash(key);
+        // Linear Probing used for collisions
+        if (keys[newHashValue] != null) {
+            while (keys[newHashValue] != null) {
+                newHashValue++;
+                if (newHashValue >= tableSize) {
+                    newHashValue = 0;
+                }
             }
-            // How do I wrap around here if at end
-            if (key.equals(keys[elementsSize])) {
-                elementsSize++;
-            }
-            else if (values[elementsSize] == null) {
-                values[elementsSize] = value;
-                keys[elementsSize] = key;
-                elementsSize++;
-            }
-    }
+        }
+        // Inserting the key and value into the empty slot
+        keys[newHashValue] = key;
+        values[newHashValue] = value;
+}
 
     public String get(String key) {
+        int keyHash = hash(key);
+        while (keys[keyHash] != null) {
+            if (keys[keyHash].equals(key)) {
+                return values[keyHash];
+            }
+            keyHash++;
+            // Wrapping around if at the end of the table
+            if (keyHash >= tableSize) {
+                keyHash = 0;
+            }
+        }
         return null;
     }
 
     public void resize() {
         int oldSize = tableSize;
         tableSize = tableSize * 2;
-        String[] newTable = new String[tableSize];
-        String[] newValues = new String[tableSize];
-        int newHash;
+        String[] oldKeys = keys;
+        String[] oldValues = values;
+        keys = new String[tableSize];
+        values = new String[tableSize];
+
+        elementsSize = 0;
         for (int i = 0; i < oldSize; i++) {
-
-            if (keys[i] == null) continue;
-
-            // I know for sure that keys[i] is NOT null
-            newHash = hash(keys[i]);
-
-            while (newValues[i] != null) {
-                i++;
-                if (i >= tableSize) {
-                    i = 0;
-                }
+            if (oldKeys[i] != null) {
+                add(oldKeys[i], oldValues[i]);
             }
-            newTable[newHash] = keys[i];
-            newValues[newHash] = values[i];
         }
-        keys = newTable;
-        values = newValues;
     }
 }
+
